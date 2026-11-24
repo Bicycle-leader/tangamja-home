@@ -94,6 +94,16 @@ function metrics(items) {
   </dl>`;
 }
 
+function chapterCard(chapter) {
+  const words = chapter.title.split(' ');
+  const breakAfter = ['impact', 'roadmap'].includes(chapter.slug) ? 1 : 2;
+  const lines = [words.slice(0, breakAfter).join(' '), words.slice(breakAfter).join(' ')];
+
+  return `<a class="chapter-card chapter-card--${chapter.slug}" href="${chapterUrl('./', chapter)}">
+    <h3 class="card-title">${lines.filter(Boolean).map((line) => `<span>${escape(line)}</span>`).join(' ')}</h3>
+  </a>`;
+}
+
 function home() {
   const [taglineStart, taglineEnd] = report.tagline.split(/(?<=,)\s+/u, 2);
 
@@ -144,12 +154,7 @@ function home() {
       <section class="contents" id="contents" aria-labelledby="contents-title">
         <div class="section-heading"><h2 id="contents-title">운영계획 목차</h2></div>
         <div class="contents-grid">
-          ${chapters.map((chapter) => `<a class="chapter-card" href="${chapterUrl('./', chapter)}">
-            <span class="card-category" lang="en">${escape(chapter.category)}</span>
-            <h3 class="card-title">${escape(chapter.title)}</h3>
-            <p class="card-description">${escape(chapter.description)}</p>
-            <span class="card-link">자세히 보기</span>
-          </a>`).join('\n')}
+          ${chapters.map(chapterCard).join('\n')}
         </div>
       </section>
     </main>

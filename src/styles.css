@@ -418,45 +418,191 @@ svg { display: block; max-width: 100%; }
 .metric-detail { display: block; color: var(--muted); font-size: .875rem; }
 
 .home-metrics + .contents { margin-top: clamp(3.25rem, 7vw, 6rem); }
-.contents { margin-bottom: clamp(3.5rem, 8vw, 6.75rem); }
+.contents { margin-bottom: clamp(3.5rem, 8vw, 6.75rem); scroll-margin-top: 1.5rem; }
 .contents .section-heading { padding-bottom: .8rem; border-bottom: 1px solid var(--forest); }
 
 .contents-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .75rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(.75rem, 1.45vw, 1.15rem);
 }
 
 .chapter-card {
   position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  overflow: hidden;
+  display: grid;
+  grid-column: span var(--card-columns, 4);
+  align-content: center;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-  min-height: 12.75rem;
-  padding: 1.25rem 1.25rem 1.15rem;
-  border: 1px solid var(--paper-line);
-  border-radius: .58rem;
-  background: var(--surface);
-  color: var(--forest);
+  min-height: clamp(12.3rem, 17vw, 15.5rem);
+  padding: clamp(1.15rem, 2.65vw, 2.65rem);
+  border-radius: .8rem;
+  box-shadow: 0 .45rem 1.25rem #3a342320;
+  background: var(--card-paper, var(--surface));
+  color: var(--card-ink, var(--forest));
   text-decoration: none;
-  transition: border-color 140ms ease, background-color 140ms ease;
+  transition: box-shadow 180ms ease;
 }
 
-.chapter-card:hover, .chapter-card:focus-within { border-color: #839c88; background: #f8fbf1; }
-.card-category, .side-label, .chapter-meta, .page-turn-label {
+.chapter-card::before, .chapter-card::after {
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  content: "";
+}
+
+.chapter-card::before { transition: scale 260ms ease; }
+
+.chapter-card::after {
+  inset: .42rem;
+  border: 1px solid currentColor;
+  border-radius: .52rem;
+  opacity: .2;
+}
+
+.chapter-card:is(:hover, :focus-visible) { box-shadow: 0 .65rem 1.55rem #3a34233b; }
+.chapter-card:is(:hover, :focus-visible)::after { opacity: .48; }
+
+.card-title {
+  position: relative;
+  font-size: clamp(1.55rem, 3.5vw, 3.2rem);
+  font-size: clamp(1.55rem, 9.6cqi, 3.5rem);
+  font-weight: 850;
+  letter-spacing: -.075em;
+  line-height: 1.13;
+  transition: translate 180ms ease;
+}
+
+.card-title span { display: block; }
+.card-title span + span {
+  margin-top: .08em;
+  color: var(--card-accent, currentColor);
+  font-size: var(--card-emphasis, 1.14em);
+  font-weight: 900;
+  letter-spacing: -.09em;
+  line-height: 1.08;
+}
+
+.chapter-card--strategy {
+  --card-columns: 7;
+  --card-paper: #173d32;
+  --card-ink: #f8f1dc;
+  --card-accent: #ebdb86;
+  --card-emphasis: 1.46em;
+  align-content: end;
+  min-height: clamp(14rem, 20vw, 17rem);
+}
+
+.chapter-card--strategy::before {
+  inset: -55% -22% -57% 35%;
+  transform: rotate(-29deg);
+  background: repeating-radial-gradient(ellipse at 62% 50%, #b9d88450 0 1px, transparent 2px 1.2rem);
+  mask-image: linear-gradient(90deg, transparent, #000 36%);
+}
+
+.chapter-card--organization {
+  --card-columns: 5;
+  --card-paper: #c8e3ae;
+  --card-ink: #1c3927;
+  --card-accent: #254e36;
+  --card-emphasis: 1.24em;
+}
+
+.chapter-card--organization::before {
+  inset: -45% -26% -31% 39%;
+  border-radius: 30%;
+  transform: rotate(-22deg);
+  background:
+    repeating-linear-gradient(90deg, #31553b55 0 1px, transparent 1px 1.25rem),
+    repeating-linear-gradient(0deg, #31553b55 0 1px, transparent 1px 1.25rem),
+    linear-gradient(145deg, transparent 33%, #7fbc6c91 80%);
+  mask-image: linear-gradient(120deg, transparent 10%, #000 63%);
+}
+
+.chapter-card--programs {
+  --card-paper: #f4c257;
+  --card-ink: #422709;
+  --card-accent: #573007;
+  --card-emphasis: 1.28em;
+}
+
+.chapter-card--programs::before {
+  inset: 22% 0 0 34%;
+  clip-path: polygon(0 100%, 0 75%, 35% 75%, 35% 50%, 65% 50%, 65% 24%, 87% 24%, 87% 0, 100% 0, 100% 100%);
+  background: repeating-linear-gradient(0deg, #e17f2d93 0 1px, #e9953b80 1px .55rem);
+}
+
+.chapter-card--challenge {
+  --card-paper: #09625b;
+  --card-ink: #f0fae8;
+  --card-accent: #c7f2c0;
+}
+
+.chapter-card--challenge::before {
+  inset: -20% -20% -15% 25%;
+  transform: rotate(-23deg);
+  border-radius: 45%;
+  background-image: radial-gradient(#aee8c68a 1.25px, transparent 1.5px);
+  background-size: .65rem .65rem;
+  mask-image: radial-gradient(ellipse at 72% 52%, #000 12%, transparent 67%);
+}
+
+.chapter-card--impact {
+  --card-paper: #dcd4ef;
+  --card-ink: #312846;
+  --card-accent: #493764;
+}
+
+.chapter-card--impact::before {
+  inset: -45% -35% -48% 20%;
+  background: repeating-radial-gradient(ellipse at 71% 43%, #6d50a151 0 1px, transparent 2px .8rem);
+  mask-image: linear-gradient(75deg, transparent 10%, #000 82%);
+}
+
+.chapter-card--finance {
+  --card-columns: 5;
+  --card-paper: #f5bda2;
+  --card-ink: #47261d;
+  --card-accent: #663724;
+  --card-emphasis: 1.24em;
+}
+
+.chapter-card--finance::before {
+  inset: -23% -27% -26% 55%;
+  transform: rotate(23deg);
+  background: repeating-linear-gradient(90deg, #b9553c65 0 .65rem, transparent .65rem 1.17rem, #b9553c30 1.17rem 2.2rem, transparent 2.2rem 2.75rem);
+  mask-image: linear-gradient(90deg, transparent, #000 37%);
+}
+
+.chapter-card--roadmap {
+  --card-columns: 7;
+  --card-paper: #293b73;
+  --card-ink: #fff6ed;
+  --card-accent: #e3e5ff;
+  justify-items: end;
+  text-align: end;
+}
+
+.chapter-card--roadmap::before {
+  inset: -35% 38% -65% -13%;
+  transform: rotate(-28deg);
+  background: repeating-linear-gradient(90deg, #acbbf54d 0 2px, transparent 2px 1rem, #acbbf52b 1rem 1.45rem, transparent 1.45rem 2.1rem);
+  mask-image: radial-gradient(ellipse at 31% 44%, #000 12%, transparent 68%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .chapter-card:is(:hover, :focus-visible)::before { scale: 1.06; }
+  .chapter-card:is(:hover, :focus-visible) .card-title { translate: 0 -.16rem; }
+}
+
+.side-label, .chapter-meta, .page-turn-label {
   color: var(--teal);
   font-size: .8125rem;
   font-weight: 750;
   letter-spacing: .085em;
 }
-
-.card-title { font-size: 1.22rem; font-weight: 850; line-height: 1.4; letter-spacing: -.055em; }
-.card-description { color: var(--muted); font-size: 1rem; line-height: 1.65; }
-.card-link { display: inline-flex; width: fit-content; margin-top: auto; padding-top: .36rem; color: var(--teal); font-size: .875rem; font-weight: 750; text-decoration: underline; text-underline-offset: .22em; }
 
 .site-footer { background: var(--forest); color: #e6eee6; }
 .footer-inner {
@@ -738,6 +884,9 @@ svg { display: block; max-width: 100%; }
   .cover { min-height: 19.5rem; }
   .chapter-layout { grid-template-columns: minmax(8rem, 9.25rem) minmax(0, 1fr); }
   .contents-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .chapter-card { grid-column: auto; min-height: clamp(11.5rem, 28vw, 14rem); }
+  .chapter-card--strategy { align-content: center; }
+  .chapter-card--roadmap { grid-column: 1 / -1; }
 }
 
 @media (max-width: 45rem) {
@@ -769,7 +918,7 @@ svg { display: block; max-width: 100%; }
   .mobile-nav summary { padding-inline: .52rem; }
   .cover-top, .cover-foot { font-size: .75rem; letter-spacing: .025em; }
   .contents-grid, .content-grid { grid-template-columns: minmax(0, 1fr); }
-  .chapter-card { min-height: 0; padding: 1rem; }
+  .chapter-card { grid-column: auto; min-height: 9.35rem; padding: 1.18rem 1.25rem; }
   .metric { gap: .12rem; }
   .metric-value { font-size: clamp(1.46rem, 6.4vw, 2.25rem); }
   .metric-label { margin-top: .32rem; }
@@ -793,6 +942,9 @@ svg { display: block; max-width: 100%; }
   .chapter-header { padding: 1rem 0; }
   .chapter-header .chapter-meta, .chapter-summary { color: #143b32; }
   .content-card, .timeline-item, .metric, .data-table tr { break-inside: avoid; }
+  .chapter-card { min-height: 0; padding: .65rem; break-inside: avoid; border: 1px solid var(--line); box-shadow: none; background: white; color: var(--forest); }
+  .chapter-card::before, .chapter-card::after { display: none; }
+  .card-title span, .card-title span + span { display: inline; font-size: 1rem; color: inherit; }
   .table-scroll { overflow: visible; }
   .data-table { min-width: 0; }
 }
