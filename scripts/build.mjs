@@ -1,7 +1,9 @@
 import { copyFile, mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { chapters, report } from '../src/content.mjs';
+import { chapters, inauguration, report } from '../src/content.mjs';
+import { renderDiagram } from '../src/diagrams.mjs';
+import { renderBudgetChart } from '../src/budget-chart.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const output = join(root, 'dist');
@@ -11,7 +13,6 @@ const escape = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 })[char]);
 
-const sectionId = (index) => `section-${index + 1}`;
 const chapterUrl = (prefix, chapter) => `${prefix}${chapter.slug}/index.html`;
 
 function navigation(prefix, activeSlug) {
@@ -64,19 +65,20 @@ function footer(prefix) {
   </footer>`;
 }
 
-function documentPage({ title, description, prefix, slug, body }) {
+function documentPage({ title, description, prefix, slug, hasDiagram = false, body }) {
   return `<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${escape(description)}">
-  <meta name="theme-color" content="#143B32">
+  <meta name="theme-color" content="#EDF7FF">
   <title>${escape(title)}</title>
-  <link rel="stylesheet" href="${prefix}styles.css">
+  <link rel="stylesheet" href="${prefix}styles.css">${hasDiagram ? `\n  <link rel="stylesheet" href="${prefix}diagrams.css">` : ''}
+  <link rel="stylesheet" href="${prefix}glass.css">${slug ? '' : `\n  <link rel="stylesheet" href="${prefix}notice.css">`}
   <link rel="icon" href="${prefix}favicon.svg" type="image/svg+xml">
 </head>
-<body class="${slug ? 'chapter-page' : 'home-page'}">
+<body class="${slug ? 'chapter-page' : 'home-page'} glass-page">
 ${header(prefix, slug)}
 ${body}
 ${footer(prefix)}
@@ -94,14 +96,26 @@ function metrics(items) {
   </dl>`;
 }
 
-function chapterCard(chapter) {
-  const words = chapter.title.split(' ');
-  const breakAfter = ['impact', 'roadmap'].includes(chapter.slug) ? 1 : 2;
-  const lines = [words.slice(0, breakAfter).join(' '), words.slice(breakAfter).join(' ')];
-
-  return `<a class="chapter-card chapter-card--${chapter.slug}" href="${chapterUrl('./', chapter)}">
-    <h3 class="card-title">${lines.filter(Boolean).map((line) => `<span>${escape(line)}</span>`).join(' ')}</h3>
-  </a>`;
+function inaugurationNotice() {
+  return `<dialog class="inauguration-notice" id="inauguration-notice" aria-labelledby="inauguration-title">
+    <div class="inauguration-notice__header">
+      <div>
+        <p class="inauguration-notice__eyebrow">탄감자 공지</p>
+        <h2 id="inauguration-title" tabindex="-1" autofocus>${escape(inauguration.title)}</h2>
+      </div>
+      <button class="inauguration-notice__close" type="submit" form="inauguration-close">닫기</button>
+    </div>
+    <div class="inauguration-notice__body" role="region" aria-label="취임사 본문" tabindex="0">
+      ${inauguration.paragraphs.map((paragraph) => `<p>${escape(paragraph)}</p>`).join('\n')}
+      <p class="inauguration-notice__signature">${escape(inauguration.signature)}</p>
+    </div>
+    <div class="inauguration-notice__footer">
+      <form id="inauguration-close" method="dialog">
+        <button class="inauguration-notice__hide-today" type="submit" value="hide-today">오늘 하루 보지 않기</button>
+        <button class="button primary" type="submit">확인</button>
+      </form>
+    </div>
+  </dialog>`;
 }
 
 function home() {
@@ -120,6 +134,7 @@ function home() {
           <div class="hero-actions">
             <a class="button primary" href="${chapterUrl('./', chapters[0])}">운영 방향 읽기</a>
             <a class="text-link" href="#contents">전체 목차</a>
+            <button class="text-link inauguration-notice-link" type="button" aria-haspopup="dialog" aria-controls="inauguration-notice" hidden>회장 취임사</button>
           </div>
         </div>
         <div class="cover">
@@ -153,12 +168,14 @@ function home() {
       </section>
       <section class="contents" id="contents" aria-labelledby="contents-title">
         <div class="section-heading"><h2 id="contents-title">운영계획 목차</h2></div>
-        <div class="contents-grid">
-          ${chapters.map(chapterCard).join('\n')}
-        </div>
+        <ul class="contents-links" role="list">
+          ${chapters.map((chapter) => `<li><a href="${chapterUrl('./', chapter)}">${escape(chapter.title)}</a></li>`).join('\n')}
+        </ul>
       </section>
     </main>
-    <script src="./cover-motion.js" defer></script>`,
+    ${inaugurationNotice()}
+    <script src="./cover-motion.js" defer></script>
+    <script src="./notice.js" defer></script>`,
   });
 }
 
@@ -169,14 +186,23 @@ function itemContent(item) {
     ${item.bullets?.length ? `<ul>${item.bullets.map((line) => `<li>${escape(line)}</li>`).join('')}</ul>` : ''}`;
 }
 
-function sectionBody(section, index) {
+function sectionBody(section) {
+  if (section.diagram) return section.diagram;
+
   if (section.layout === 'table') {
-    return `<div class="table-scroll" tabindex="0" role="region" aria-labelledby="${sectionId(index)}-title">
+    const table = `<div class="table-scroll" tabindex="0" role="region" aria-labelledby="${escape(section.id)}-title">
       <table class="data-table">
         <thead><tr>${section.columns.map((column) => `<th scope="col">${escape(column)}</th>`).join('')}</tr></thead>
         <tbody>${section.rows.map(([label, ...cells]) => `<tr><th scope="row">${escape(label)}</th>${cells.map((value) => `<td>${escape(value)}</td>`).join('')}</tr>`).join('\n')}</tbody>
       </table>
     </div>`;
+    if (!section.chart) return table;
+
+    return `${section.chart}
+    <details class="budget-details">
+      <summary>${escape(section.title)} 표 보기</summary>
+      ${table}
+    </details>`;
   }
 
   if (!section.items?.length) return '';
@@ -194,11 +220,19 @@ function sectionBody(section, index) {
 
 function chapterPage(chapter, index) {
   const [previous, next] = [chapters[index - 1], chapters[index + 1]];
+  const sections = chapter.sections.map((section, sectionIndex) => ({
+    ...section,
+    id: section.anchor ?? `section-${sectionIndex + 1}`,
+    diagram: renderDiagram(section, escape),
+    chart: renderBudgetChart(section, escape),
+  }));
+
   return documentPage({
     title: `${chapter.title} · ${report.title}(안)`,
     description: chapter.description,
     prefix: '../',
     slug: chapter.slug,
+    hasDiagram: sections.some((section) => section.diagram || section.chart),
     body: `<main id="main" class="container">
       <nav class="breadcrumbs" aria-label="현재 위치"><a href="../index.html#contents">운영계획 목차</a><span aria-hidden="true">/</span><span aria-current="page">${escape(chapter.nav)}</span></nav>
       <header class="chapter-header">
@@ -210,15 +244,15 @@ function chapterPage(chapter, index) {
         <aside class="chapter-side">
           <nav aria-label="이 페이지의 목차">
             <p class="side-label">이 페이지</p>
-            <ul class="section-links">${chapter.sections.map((section, sectionIndex) => `<li><a href="#${sectionId(sectionIndex)}">${escape(section.title)}</a></li>`).join('\n')}</ul>
+            <ul class="section-links">${sections.map((section) => `<li><a href="#${escape(section.id)}">${escape(section.title)}</a></li>`).join('\n')}</ul>
           </nav>
         </aside>
         <div class="chapter-content">
           ${chapter.highlights?.length ? metrics(chapter.highlights) : ''}
-          ${chapter.sections.map((section, sectionIndex) => `<section id="${sectionId(sectionIndex)}" class="article-section" aria-labelledby="${sectionId(sectionIndex)}-title">
-            <h2 id="${sectionId(sectionIndex)}-title">${escape(section.title)}</h2>
+          ${sections.map((section) => `<section id="${escape(section.id)}" class="article-section" aria-labelledby="${escape(section.id)}-title">
+            <h2 id="${escape(section.id)}-title">${escape(section.title)}</h2>
             ${section.intro ? `<p class="section-intro">${escape(section.intro)}</p>` : ''}
-            ${sectionBody(section, sectionIndex)}
+            ${sectionBody(section)}
             ${section.note ? `<p class="section-note">${escape(section.note)}</p>` : ''}
           </section>`).join('\n')}
           <p class="source-note">${escape(chapter.source)}</p>
@@ -235,8 +269,12 @@ function chapterPage(chapter, index) {
 await mkdir(output, { recursive: true });
 await Promise.all([
   copyFile(join(root, 'src', 'styles.css'), join(output, 'styles.css')),
+  copyFile(join(root, 'src', 'diagrams.css'), join(output, 'diagrams.css')),
+  copyFile(join(root, 'src', 'glass.css'), join(output, 'glass.css')),
   copyFile(join(root, 'src', 'cover-motion.js'), join(output, 'cover-motion.js')),
-  writeFile(join(output, 'favicon.svg'), `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="13" fill="#143B32"/><g transform="translate(3 14) scale(.91)" fill="none" stroke="#F0CB72" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="27" r="10"/><circle cx="50" cy="27" r="10"/><path d="M14 27 25 10l11 17H14m11-17h19l-8 17m14 0L43 5h7M20 10h10"/></g></svg>`),
+  copyFile(join(root, 'src', 'notice.css'), join(output, 'notice.css')),
+  copyFile(join(root, 'src', 'notice.js'), join(output, 'notice.js')),
+  writeFile(join(output, 'favicon.svg'), `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="13" fill="#16384F"/><g transform="translate(3 14) scale(.91)" fill="none" stroke="#BDE6FB" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="27" r="10"/><circle cx="50" cy="27" r="10"/><path d="M14 27 25 10l11 17H14m11-17h19l-8 17m14 0L43 5h7M20 10h10"/></g></svg>`),
   writeFile(join(output, 'index.html'), home()),
   ...chapters.map(async (chapter, index) => {
     const path = join(output, chapter.slug);

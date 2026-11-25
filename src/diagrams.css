@@ -1,0 +1,507 @@
+.report-diagram {
+  --diagram-line: #71847a;
+  --diagram-field: #f3f5ef;
+  --diagram-branch-line: #9a7952;
+  --diagram-gap: .7rem;
+  --diagram-stem: 1rem;
+  --diagram-rail: .62rem;
+  --diagram-fork: .8rem;
+  --diagram-joint: 1.62rem;
+  container: report-diagram / inline-size;
+  margin-block-start: 1rem;
+  padding: clamp(.9rem, 2.5vw, 1.65rem);
+  border: 1px solid var(--line);
+  border-radius: .5rem;
+  background: var(--diagram-field);
+}
+
+.diagram-node {
+  min-width: 0;
+  margin: 0;
+  padding: .82rem .9rem;
+  border: 1px solid var(--line);
+  border-radius: .32rem;
+  background: var(--surface);
+  color: var(--forest);
+}
+
+.diagram-node dt {
+  font-weight: 750;
+  letter-spacing: -.025em;
+  line-height: 1.4;
+}
+
+.diagram-node dd {
+  margin: .31rem 0 0;
+  color: var(--body);
+  line-height: 1.58;
+}
+
+.diagram-node--primary {
+  border-color: var(--forest);
+  background: var(--forest);
+  color: var(--surface);
+}
+
+.diagram-node--primary dd { color: var(--inverse-muted, #c9d8ce); }
+
+.strategy-framework__sequence,
+.organization-chart__root,
+.diagram-branches,
+.strategy-framework__values ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.strategy-framework { --strategy-gap: 1.45rem; }
+
+.strategy-framework__sequence > li + li {
+  position: relative;
+  margin-block-start: var(--strategy-gap);
+}
+
+.strategy-framework__sequence > li + li::before,
+.strategy-framework__directions::before {
+  position: absolute;
+  inset-block-start: calc(-1 * var(--strategy-gap));
+  inset-inline-start: 50%;
+  width: 1px;
+  height: var(--strategy-gap);
+  background: var(--diagram-line);
+  content: '';
+}
+
+.strategy-framework__sequence > li + li::after {
+  position: absolute;
+  inset-block-start: calc(-.5 * var(--strategy-gap) - .135rem);
+  inset-inline-start: calc(50% - .17rem);
+  width: .36rem;
+  height: .36rem;
+  border-block-end: 1px solid var(--diagram-line);
+  border-inline-end: 1px solid var(--diagram-line);
+  transform: rotate(45deg);
+  content: '';
+}
+
+.strategy-framework__sequence .diagram-node {
+  padding: .9rem clamp(.95rem, 2.3vw, 1.55rem);
+  text-align: center;
+}
+
+.strategy-framework__sequence .diagram-node dt { font-size: 1.12rem; }
+.strategy-framework__sequence .diagram-node dd { text-wrap: balance; }
+.diagram-node--mission { border-color: var(--accent-line, #d7c5a8); }
+
+.strategy-framework__directions {
+  position: relative;
+  margin-block-start: var(--strategy-gap);
+  padding: .46rem .85rem;
+  border: 1px solid var(--line);
+  border-radius: .32rem;
+  background: var(--mist);
+  color: var(--forest);
+  font-size: 1rem;
+  line-height: 1.45;
+  scroll-margin-top: 1.25rem;
+}
+
+.diagram-branches {
+  position: relative;
+  display: grid;
+  gap: var(--diagram-gap);
+  padding-block-start: var(--diagram-stem);
+  padding-inline-start: calc(var(--diagram-rail) + var(--diagram-fork));
+}
+
+.diagram-branches > li { position: relative; display: grid; align-items: start; min-width: 0; }
+.diagram-branches--four > li { align-items: stretch; }
+
+.diagram-branches > li::before,
+.diagram-branches > li::after {
+  position: absolute;
+  inset-inline-start: calc(-1 * var(--diagram-fork));
+  background: var(--diagram-line);
+  content: '';
+}
+
+.diagram-branches > li::before {
+  inset-block-start: var(--diagram-joint);
+  width: var(--diagram-fork);
+  height: 1px;
+}
+
+.diagram-branches > li::after {
+  inset-block: calc(-1 * var(--diagram-gap)) 0;
+  width: 1px;
+}
+
+.diagram-branches > li:first-child::after { inset-block-start: calc(-1 * var(--diagram-stem)); }
+
+.diagram-branches > li:last-child::after {
+  inset-block-end: auto;
+  height: calc(var(--diagram-gap) + var(--diagram-joint));
+}
+
+.strategy-framework__values {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .3rem 1.15rem;
+  margin-block-start: 1rem;
+  padding: .72rem .9rem;
+  border-block-start: 1px solid var(--accent-line, #d7c5a8);
+  background: var(--paper);
+}
+
+.strategy-framework__values h3 { color: var(--brass-ink, #735026); font-size: 1rem; line-height: 1.5; }
+.strategy-framework__values ul { display: flex; flex-wrap: wrap; gap: .25rem 1rem; color: var(--body); }
+
+.organization-chart__committee {
+  padding: .85rem;
+  border: 1px solid var(--line);
+  border-radius: .4rem;
+  background: var(--mist);
+}
+
+.organization-chart__committee h3 {
+  margin-block-end: .65rem;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.organization-chart__chair { border-color: var(--sage); }
+.organization-chart__audit { border-color: var(--diagram-line); border-style: dashed; }
+
+.schedule-track, .process-flow {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.schedule-track { --schedule-gap: 1.15rem; gap: var(--schedule-gap); }
+
+.schedule-track__item, .process-flow__item { position: relative; min-width: 0; }
+
+.schedule-track__item { padding-inline-start: 1.5rem; }
+
+.schedule-track__item::before {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: .35rem;
+  inset-inline-start: 0;
+  inline-size: .75rem;
+  block-size: .75rem;
+  border: 1px solid var(--teal);
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: inset 0 0 0 2px var(--surface);
+  content: '';
+}
+
+.schedule-track__item:not(:last-child)::after {
+  position: absolute;
+  inset-block: .7rem calc(-1 * var(--schedule-gap) - .7rem);
+  inset-inline-start: .34rem;
+  inline-size: 1px;
+  background: var(--diagram-line);
+  content: '';
+}
+
+.schedule-track__date, .process-flow__step {
+  color: var(--teal);
+  font-size: .875rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.schedule-track__date {
+  margin-block-end: .28rem;
+  color: var(--brass-ink, #735026);
+  font-variant-numeric: tabular-nums;
+}
+
+.diagram-sequence-details h3 {
+  color: var(--forest);
+  font-size: 1.06rem;
+  font-weight: 750;
+  letter-spacing: -.025em;
+  line-height: 1.4;
+}
+
+.diagram-sequence-details > p, .diagram-sequence-details > ul,
+.process-flow__branch > p {
+  margin-block: .38rem 0;
+  color: var(--body);
+  line-height: 1.58;
+}
+
+.diagram-sequence-details > ul { padding-inline-start: 1.25rem; }
+
+.process-flow { --flow-gap: 1.6rem; gap: var(--flow-gap); }
+
+.process-flow__stage { position: relative; z-index: 1; }
+
+.process-flow__step {
+  display: flex;
+  align-items: center;
+  gap: .48rem;
+  margin-block-end: .5rem;
+}
+
+.process-flow__number {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  inline-size: 1.65rem;
+  block-size: 1.65rem;
+  border: 1px solid var(--teal);
+  border-radius: 50%;
+  background: var(--mist);
+  color: var(--deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.process-flow__item:not(:last-child)::before,
+.process-flow__item:not(:last-child)::after {
+  position: absolute;
+  inset-inline-start: 1.68rem;
+  color: var(--teal);
+  content: '';
+}
+
+.process-flow__item:not(:last-child)::before {
+  inset-block: 0 calc(-1 * var(--flow-gap));
+  inline-size: 1px;
+  background: currentColor;
+}
+
+.process-flow__item:not(:last-child)::after {
+  inset-block-end: calc(-.7 * var(--flow-gap));
+  inline-size: .44rem;
+  block-size: .44rem;
+  border: solid currentColor;
+  border-width: 0 1px 1px 0;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.process-flow__branch {
+  position: relative;
+  margin: .7rem 0 0 3.1rem;
+  padding: .58rem .7rem;
+  border: 1px dashed var(--diagram-branch-line);
+  border-radius: .32rem;
+  background: var(--paper);
+  color: var(--forest);
+}
+
+.process-flow__branch > strong { color: var(--brass-ink, #735026); }
+
+.process-flow__branch::before {
+  position: absolute;
+  inset-block-start: -.75rem;
+  inset-inline-start: .7rem;
+  block-size: .75rem;
+  border-inline-start: 1px dashed var(--diagram-branch-line);
+  content: '';
+}
+
+@container report-diagram (min-width: 43rem) {
+  .organization-chart__assembly {
+    width: min(100%, 21rem);
+    margin-inline: auto;
+  }
+
+  .organization-chart__assembly,
+  .organization-chart__chair,
+  .organization-chart__committee h3,
+  .organization-chart__audit,
+  .strategy-framework__directions { text-align: center; }
+
+  .diagram-branches {
+    padding-block-start: calc(2 * var(--diagram-stem));
+    padding-inline-start: 0;
+  }
+
+  .diagram-branches--four {
+    --diagram-branch-start: calc((100% - 3 * var(--diagram-gap)) / 8);
+    --diagram-branch-end: var(--diagram-branch-start);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .diagram-branches--split {
+    --diagram-branch-start: calc((100% - var(--diagram-gap)) * .375);
+    --diagram-branch-end: calc((100% - var(--diagram-gap)) / 8);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+  }
+
+  .diagram-branches::before,
+  .diagram-branches::after {
+    position: absolute;
+    background: var(--diagram-line);
+    content: '';
+  }
+
+  .diagram-branches::before {
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    width: 1px;
+    height: var(--diagram-stem);
+  }
+
+  .diagram-branches::after {
+    inset-block-start: var(--diagram-stem);
+    inset-inline: var(--diagram-branch-start) var(--diagram-branch-end);
+    height: 1px;
+  }
+
+  .diagram-branches > li::before {
+    inset-block-start: calc(-1 * var(--diagram-stem));
+    inset-inline-start: 50%;
+    width: 1px;
+    height: var(--diagram-stem);
+  }
+
+  .diagram-branches > li::after { display: none; }
+
+  .organization-chart__committee .diagram-branches--four .diagram-node {
+    padding-inline: .6rem;
+  }
+
+  .schedule-track:not(:has(> :nth-child(5))), .process-flow:not(:has(> :nth-child(5))) {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .schedule-track:not(:has(> :nth-child(5))) > .schedule-track__item {
+    padding-inline-start: 0;
+  }
+
+  .schedule-track:not(:has(> :nth-child(5))) .schedule-track__date {
+    display: flex;
+    align-items: flex-end;
+    min-block-size: 2.85rem;
+    margin-block-end: 1.24rem;
+  }
+
+  .schedule-track:not(:has(> :nth-child(5))) > .schedule-track__item::before {
+    inset-block-start: 3.1rem;
+  }
+
+  .schedule-track:not(:has(> :nth-child(5))) > .schedule-track__item:not(:last-child)::after {
+    inset-block: 3.44rem auto;
+    inline-size: calc(100% + var(--schedule-gap));
+    block-size: 1px;
+  }
+
+  .process-flow:not(:has(> :nth-child(5))) { --flow-gap: 1.3rem; }
+
+  .process-flow:not(:has(> :nth-child(5))) .process-flow__stage { min-block-size: 10rem; }
+
+  .process-flow:not(:has(> :nth-child(5))) > .process-flow__item::before,
+  .process-flow:not(:has(> :nth-child(5))) > .process-flow__item::after {
+    inset-block: 1.65rem auto;
+    inset-inline-start: 100%;
+  }
+
+  .process-flow:not(:has(> :nth-child(5))) > .process-flow__item::before {
+    inline-size: var(--flow-gap);
+    block-size: 1px;
+  }
+
+  .process-flow:not(:has(> :nth-child(5))) > .process-flow__item::after {
+    inset-inline-start: calc(100% + .6 * var(--flow-gap));
+    transform: translateY(-50%) rotate(-45deg);
+  }
+
+  .process-flow:not(:has(> :nth-child(5))) .process-flow__branch { margin-inline-start: .85rem; }
+}
+
+@media screen and (max-width: 33rem) {
+  .report-diagram {
+    --diagram-gap: .55rem;
+    --diagram-stem: .72rem;
+    --diagram-rail: .38rem;
+    --diagram-fork: .55rem;
+    --diagram-joint: 1.35rem;
+    padding: .75rem clamp(.55rem, 2.2vw, .75rem);
+  }
+
+  .diagram-node { padding: .62rem .7rem; }
+  .diagram-node dt { font-size: 1rem; }
+
+  .diagram-node dd,
+  .diagram-sequence-details > p,
+  .diagram-sequence-details > ul,
+  .process-flow__branch > p,
+  .timeline-item p {
+    margin-block-start: .25rem;
+    font-size: .9375rem;
+    line-height: 1.55;
+  }
+
+  .strategy-framework { --strategy-gap: 1.1rem; }
+  .strategy-framework__sequence .diagram-node { padding: .7rem .75rem; }
+  .strategy-framework__directions { padding: .42rem .7rem; }
+
+  .strategy-framework__values {
+    gap: .2rem .7rem;
+    margin-block-start: .75rem;
+    padding: .55rem .65rem;
+  }
+
+  .strategy-framework__values ul { gap: .12rem .65rem; font-size: .9375rem; line-height: 1.55; }
+
+  .organization-chart__committee { padding: .63rem; }
+  .organization-chart__committee h3 { margin-block-end: .48rem; }
+
+  .schedule-track {
+    --schedule-gap: .85rem;
+    --schedule-card-padding: .58rem .7rem;
+  }
+
+  .schedule-track__item { padding-inline-start: 1.22rem; }
+
+  .schedule-track__date,
+  .process-flow__step,
+  .timeline-item .item-label {
+    margin-block-end: .24rem;
+    font-size: .9375rem;
+    line-height: 1.45;
+  }
+
+  .strategy-framework__sequence .diagram-node dt,
+  .diagram-sequence-details h3,
+  .timeline-item h3 { font-size: 1.0625rem; }
+
+  .process-flow { --flow-gap: 1.18rem; }
+  .process-flow__step { gap: .4rem; }
+  .process-flow__number { inline-size: 1.5rem; block-size: 1.5rem; }
+
+  .process-flow__item:not(:last-child)::before,
+  .process-flow__item:not(:last-child)::after { inset-inline-start: 1.45rem; }
+
+  .process-flow__branch {
+    margin-block-start: .52rem;
+    margin-inline-start: 2.25rem;
+    padding: .48rem .6rem;
+  }
+
+  .process-flow__branch::before {
+    inset-block-start: -.58rem;
+    inset-inline-start: .55rem;
+    block-size: .58rem;
+  }
+
+  .timeline-item { padding: .2rem .25rem .95rem 1rem; }
+}
+
+@media print {
+  .report-diagram { border-color: var(--line); background: white; }
+  .diagram-node, .schedule-track__item, .process-flow__item { break-inside: avoid; }
+  .diagram-node--primary { background: white; color: var(--forest); }
+  .diagram-node--primary dd { color: var(--body); }
+  .process-flow__number { background: white; color: var(--forest); }
+}

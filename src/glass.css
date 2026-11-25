@@ -1,0 +1,460 @@
+:root { background-color: #edf6fc; }
+
+.glass-page {
+  --forest: #16384f;
+  --deep: #102b40;
+  --teal: #1c5b80;
+  --sage: #a8cbdf;
+  --gold: #6995b0;
+  --paper: #edf6fc;
+  --surface: #fafdff;
+  --mist: #e0eff8;
+  --line: #c3dceb;
+  --paper-line: #c9e0ed;
+  --body: #304a5d;
+  --muted: #486478;
+  --brass-ink: #285f82;
+  --accent-line: #b1d1e4;
+  --inverse-muted: #cde5f5;
+  --glass-edge: #ffffffb8;
+  --glass-panel: linear-gradient(125deg, #ffffffd9, #f5fbffb3 66%, #e8f4fbc7);
+  --glass-shadow: 0 1px 0 #ffffffab inset, 0 12px 34px #285f8210;
+  --glass-node: linear-gradient(160deg, #fffffff0, #edf8fee8);
+  background:
+    radial-gradient(ellipse 57rem 29rem at 83% 3rem, #b9def2a6, transparent 76%),
+    radial-gradient(ellipse 48rem 32rem at 2% 43rem, #d4ecf9b8, transparent 80%),
+    linear-gradient(168deg, #f8fcff, #edf6fc 35rem, #f6fbfd 76rem);
+  color: var(--forest);
+}
+
+.glass-page ::selection { background: #c9e8fa; color: var(--deep); }
+
+.glass-page .site-header {
+  background: #f6fbfee8;
+  border-color: var(--paper-line);
+}
+
+.glass-page .brand-mark { background: #e3f1f9; }
+.glass-page .review-tag { background: #fafdffbd; }
+.glass-page .mobile-links { box-shadow: 0 .8rem 2rem #16384f20; }
+
+.glass-page .hero .eyebrow span { background: var(--brass-ink); }
+
+.glass-page .hero .button.primary {
+  border-color: var(--teal);
+  border-radius: .45rem;
+  background: linear-gradient(130deg, #2a658b, var(--teal));
+  box-shadow: 0 5px 14px #285f822d;
+}
+
+.glass-page .hero .button.primary:hover { border-color: var(--forest); background: var(--forest); }
+
+.glass-page .cover {
+  border-color: var(--glass-edge);
+  border-radius: .75rem;
+  background:
+    repeating-linear-gradient(90deg, #4d8bad0b 0 1px, transparent 1px 3rem),
+    repeating-linear-gradient(0deg, #4d8bad0b 0 1px, transparent 1px 3rem),
+    radial-gradient(ellipse at 6% 0%, #fffffff0, transparent 66%),
+    linear-gradient(150deg, #f1faffdb, #d7edfad9 60%, #badff3e6);
+  box-shadow: var(--glass-shadow), 0 0 0 1px #adcfe480;
+  color: var(--brass-ink);
+}
+
+.glass-page .cover::before { border-color: #ffffff8c; border-radius: .4rem; }
+.glass-page :is(.cover-top, .cover-foot) { border-color: #7ca5bf69; }
+.glass-page .cover-year { color: var(--deep); }
+.glass-page .cover-foot { color: var(--forest); }
+.glass-page .cover-track { stroke: #4f87a8; stroke-opacity: .56; }
+.glass-page .cover-route { stroke: #4280a5; }
+.glass-page .cover-route-point { fill: #2a6a93; }
+.glass-page .cover-bike { stroke: #153f5b; }
+
+.glass-page .cover-motion-toggle {
+  border-color: #87b0c9;
+  border-radius: .4rem;
+  background: #f6fbffed;
+  box-shadow: var(--glass-shadow);
+  color: var(--deep);
+}
+
+.glass-page .cover-motion-toggle:hover { background: #e4f3fc; }
+.glass-page .cover-motion-toggle:focus-visible { outline-color: var(--teal); }
+.glass-page .home-metrics .metric-value { color: var(--brass-ink); }
+.glass-page .contents-links a { color: var(--forest); font-weight: 750; }
+.glass-page .contents-links a:hover { color: var(--teal); }
+
+.glass-page .chapter-header {
+  border: 1px solid var(--glass-edge);
+  border-radius: .75rem;
+  background:
+    radial-gradient(ellipse at 100% 0%, #d1ebfaac, transparent 58%),
+    linear-gradient(112deg, #ffffffdd, #eef8ffd4);
+  box-shadow: var(--glass-shadow), 0 0 0 1px #b8d7e858;
+}
+
+.glass-page .chapter-header::after {
+  background: repeating-radial-gradient(ellipse at 65% 50%, #4d8bad28 0 1px, transparent 1px 1.12rem);
+}
+
+.glass-page .metrics,
+.glass-page .report-diagram,
+.glass-page .budget-chart {
+  border: 1px solid var(--glass-edge);
+  border-radius: .75rem;
+  background: var(--glass-panel);
+  box-shadow: var(--glass-shadow), 0 0 0 1px #bfd9e980;
+}
+
+@supports (backdrop-filter: blur(12px)) {
+  .glass-page .site-header,
+  .glass-page .cover,
+  .glass-page .chapter-header,
+  .glass-page .metrics,
+  .glass-page .report-diagram,
+  .glass-page .budget-chart { backdrop-filter: blur(12px); }
+}
+
+.glass-page :is(.content-card, .page-turn-link) {
+  border-radius: .5rem;
+  border-color: var(--line);
+  background: #f8fcffb3;
+}
+
+.glass-page .page-turn-link:hover { background: var(--mist); }
+.glass-page .table-scroll { border-radius: .5rem; }
+.glass-page .data-table tbody > tr:nth-child(even) { background: #f2f8fc; }
+.glass-page .section-note { background: #e4f2fa; }
+
+.glass-page .site-footer {
+  background: #e9f4fbd9;
+  color: var(--forest);
+  border-color: var(--line);
+}
+
+.glass-page .footer-inner p { color: var(--muted); }
+.glass-page .site-footer a:focus-visible { outline-color: var(--teal); }
+
+.glass-page .report-diagram {
+  --diagram-line: #638ca5;
+  --diagram-branch-line: #537f9a;
+}
+
+.glass-page .diagram-node {
+  border-color: #c1dbea;
+  border-radius: .55rem;
+  background: var(--glass-node);
+  box-shadow: 0 4px 12px #3c769511;
+}
+
+.glass-page .diagram-node--primary {
+  border-color: #87b7d3;
+  background: linear-gradient(135deg, #e7f6ff, #cee8f7);
+  color: var(--deep);
+}
+
+.glass-page .diagram-node--primary dd { color: var(--body); }
+.glass-page .diagram-node--mission { border-color: var(--accent-line); }
+
+.glass-page :is(.strategy-framework__directions, .organization-chart__committee) {
+  border-color: var(--accent-line);
+  border-radius: .55rem;
+  background: linear-gradient(135deg, #e9f6fecf, #dbedf8b3);
+}
+
+.glass-page .strategy-framework__values { background: #eaf5fbb3; }
+.glass-page .organization-chart__chair { border-color: #9bc1d8; }
+
+.glass-page .organization-chart__audit {
+  border-color: var(--diagram-line);
+  background: #f2f9fdd9;
+  box-shadow: none;
+}
+
+.glass-page .process-flow__branch { border-radius: .45rem; background: #e9f5fdd9; }
+
+.glass-page .process-flow__number {
+  border-color: #94bfd8;
+  background: #d9eefb;
+  color: var(--deep);
+}
+
+.glass-page .schedule-track .diagram-sequence-details {
+  padding: var(--schedule-card-padding, .8rem .85rem);
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+  background: var(--glass-node);
+}
+
+.glass-page .schedule-track .diagram-sequence-details > ul {
+  margin-block-start: .65rem;
+  padding-inline-start: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.glass-page .schedule-track .diagram-sequence-details > ul li + li {
+  margin-block-start: .32rem;
+  padding-block-start: .32rem;
+  border-block-start: 1px solid var(--paper-line);
+}
+
+.glass-page .budget-chart {
+  --budget-label-width: 6.8rem;
+  --budget-value-width: 3.05rem;
+  --budget-gap: .55rem;
+  --budget-dues: #5097c2;
+  --budget-entry: #86bdde;
+  --budget-sponsor: #b0d5eb;
+  --budget-base: #559ac4;
+  --budget-funded: #8ac0df;
+  min-width: 0;
+  margin: 1rem 0 0;
+  padding: clamp(.95rem, 2.6vw, 1.6rem);
+}
+
+.glass-page .budget-chart__caption,
+.glass-page .budget-chart__row-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: .25rem .7rem;
+}
+
+.glass-page .budget-chart__caption > strong {
+  color: var(--forest);
+  font-size: 1.08rem;
+  letter-spacing: -.025em;
+}
+
+.glass-page .budget-chart__caption > span,
+.glass-page .budget-chart__axis,
+.glass-page .budget-chart__series-name,
+.glass-page .budget-chart__note {
+  color: var(--muted);
+  font-size: .875rem;
+}
+
+.glass-page .budget-chart__legend,
+.glass-page .budget-chart__rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.glass-page .budget-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem 1.05rem;
+  margin-block: .65rem .8rem;
+  color: var(--body);
+  font-size: .88rem;
+}
+
+.glass-page .budget-chart__legend > li {
+  display: flex;
+  align-items: baseline;
+  gap: .35rem;
+}
+
+.glass-page .budget-chart__swatch {
+  display: inline-block;
+  flex: none;
+  inline-size: .7rem;
+  block-size: .7rem;
+  border: 1px solid #16384f24;
+  border-radius: .16rem;
+}
+
+.glass-page :is(.budget-chart__swatch--dues, .budget-chart__bar--dues) { background: var(--budget-dues); }
+.glass-page :is(.budget-chart__swatch--entry, .budget-chart__bar--entry) { background: var(--budget-entry); }
+.glass-page :is(.budget-chart__swatch--base, .budget-chart__bar--base) { background: var(--budget-base); }
+.glass-page :is(.budget-chart__swatch--funded, .budget-chart__bar--funded) { background: var(--budget-funded); }
+.glass-page :is(.budget-chart__swatch--sponsor, .budget-chart__bar--sponsor) {
+  background: repeating-linear-gradient(135deg, #ffffff66 0 3px, transparent 3px 7px), var(--budget-sponsor);
+}
+
+.glass-page .budget-chart__axis {
+  display: flex;
+  justify-content: space-between;
+  padding-block-end: .18rem;
+  border-block-end: 1px solid var(--line);
+  font-size: .75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.glass-page .budget-chart--expense .budget-chart__axis {
+  margin-inline: calc(var(--budget-label-width) + var(--budget-gap)) calc(var(--budget-value-width) + var(--budget-gap));
+}
+
+.glass-page .budget-chart__row { padding-block: .8rem; }
+.glass-page .budget-chart__row + .budget-chart__row { border-block-start: 1px solid var(--paper-line); }
+.glass-page .budget-chart__row:last-child { padding-block-end: 0; }
+
+.glass-page .budget-chart__row-heading {
+  margin-block-end: .36rem;
+  color: var(--forest);
+  font-weight: 700;
+}
+
+.glass-page .budget-chart__row-heading > strong,
+.glass-page .budget-chart__value {
+  color: var(--deep);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.glass-page .budget-chart__track {
+  display: flex;
+  overflow: hidden;
+  min-width: 0;
+  block-size: .76rem;
+  border-radius: .2rem;
+  background: #dcecf6;
+  box-shadow: 0 1px 2px #16384f14 inset;
+}
+
+.glass-page .budget-chart--revenue .budget-chart__track { block-size: 1rem; }
+
+.glass-page .budget-chart__bar { flex: 0 0 var(--budget-size); }
+
+.glass-page .budget-chart__category {
+  margin-block-end: .4rem;
+  color: var(--forest);
+  font-size: 1rem;
+  font-weight: 760;
+  line-height: 1.45;
+}
+
+.glass-page .budget-chart__series { display: grid; gap: .23rem; }
+
+.glass-page .budget-chart__pair {
+  display: grid;
+  grid-template-columns: var(--budget-label-width) minmax(0, 1fr) var(--budget-value-width);
+  align-items: center;
+  gap: var(--budget-gap);
+}
+
+.glass-page .budget-chart__value {
+  font-size: .88rem;
+  text-align: end;
+  white-space: nowrap;
+}
+
+.glass-page .budget-chart__note { margin-block-start: .8rem; }
+
+.glass-page .budget-details { margin-block-start: .8rem; }
+
+.glass-page .budget-details > summary {
+  display: flex;
+  align-items: center;
+  gap: .58rem;
+  width: fit-content;
+  min-height: 2.75rem;
+  padding: .46rem .72rem;
+  border: 1px solid var(--line);
+  border-radius: .4rem;
+  list-style: none;
+  background: #fafdffc9;
+  color: var(--teal);
+  font-size: .9rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.glass-page .budget-details > summary::-webkit-details-marker { display: none; }
+
+.glass-page .budget-details > summary::before {
+  inline-size: .42rem;
+  block-size: .42rem;
+  border: solid currentColor;
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-.12rem) rotate(45deg);
+  content: '';
+}
+
+.glass-page .budget-details[open] > summary::before { transform: translateY(.11rem) rotate(225deg); }
+.glass-page .budget-details > summary:hover { background: var(--mist); }
+.glass-page .budget-details .table-scroll { margin-block-start: .65rem; }
+
+@media screen and (max-width: 33rem) {
+  .glass-page .budget-chart {
+    --budget-label-width: 4.65rem;
+    --budget-value-width: 3.6rem;
+    --budget-gap: .45rem;
+    padding: .8rem .72rem;
+    line-height: 1.45;
+  }
+
+  .glass-page .budget-chart__caption > strong { font-size: 1.0625rem; }
+  .glass-page .budget-chart__caption > span { font-size: .8125rem; }
+
+  .glass-page .budget-chart__legend {
+    gap: .32rem .85rem;
+    margin-block: .52rem .62rem;
+    font-size: .875rem;
+  }
+
+  .glass-page .budget-chart--revenue .budget-chart__legend {
+    display: grid;
+  }
+
+  .glass-page .budget-chart--revenue .budget-chart__legend > li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: .45rem;
+  }
+
+  .glass-page .budget-chart__legend strong,
+  .glass-page .budget-chart__row-heading > strong { white-space: nowrap; }
+
+  .glass-page .budget-chart__legend strong { font-variant-numeric: tabular-nums; }
+  .glass-page .budget-chart__axis { font-size: .8125rem; }
+  .glass-page .budget-chart__row { padding-block: .65rem; }
+  .glass-page .budget-chart__row-heading { margin-block-end: .32rem; }
+  .glass-page .budget-chart__category { margin-block-end: .3rem; }
+  .glass-page .budget-chart__series { gap: .27rem; }
+  .glass-page .budget-chart__series-name { word-break: keep-all; }
+  .glass-page .budget-chart__value { font-size: .9375rem; }
+  .glass-page .budget-chart__note { margin-block-start: .65rem; }
+}
+
+@media screen and (max-width: 23rem) {
+  .glass-page .budget-chart--expense .budget-chart__axis > :nth-child(even):not(:last-child) {
+    visibility: hidden;
+  }
+}
+
+@media print {
+  :root { background-color: white; }
+
+  .glass-page,
+  .glass-page .cover,
+  .glass-page .chapter-header,
+  .glass-page .metrics,
+  .glass-page .report-diagram,
+  .glass-page .budget-chart,
+  .glass-page .schedule-track .diagram-sequence-details,
+  .glass-page .section-note {
+    border-color: var(--line);
+    background: white;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .glass-page :is(.cover-year, .cover-foot) { color: var(--forest); }
+  .glass-page .cover-bike { stroke: var(--forest); }
+
+  .glass-page :is(.diagram-node, .strategy-framework__directions, .strategy-framework__values, .organization-chart__committee, .process-flow__branch) {
+    background: white;
+    box-shadow: none;
+  }
+
+  .glass-page .budget-chart__row { break-inside: avoid; }
+
+  .glass-page .budget-chart__track {
+    border: 1px solid var(--line);
+    print-color-adjust: exact;
+  }
+}
