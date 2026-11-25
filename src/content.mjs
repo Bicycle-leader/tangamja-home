@@ -1,3 +1,6 @@
+const participationEstimate = '회비 납부·활동 인원은 15명 이내로 추정합니다.';
+const membershipStatus = `현재 전체 회원은 32명이며, ${participationEstimate}`;
+
 export const report = {
   title: '2027 탄감자 운영계획',
   subtitle: '조직 및 주요업무 추진계획(안)',
@@ -11,7 +14,7 @@ export const report = {
     { value: '12,000km', label: '자동차 대체거리', detail: '출퇴근·장보기 등 일상 이동' },
     { value: '2.3t', label: '추정 CO₂ 회피량', detail: '추가 지원차량 배출 차감 전' },
   ],
-  homeNote: '2027년 운영계획의 제안 목표입니다. CO₂ 회피량은 자동차 대체거리와 잠정 배출계수로 산정한 추정치입니다.',
+  homeNote: `${membershipStatus} 아래 수치는 2027년 운영계획의 제안 목표입니다. CO₂ 회피량은 자동차 대체거리와 잠정 배출계수로 산정한 추정치입니다.`,
 };
 
 export const inauguration = {
@@ -107,10 +110,10 @@ export const chapters = [
     nav: '조직·안전',
     category: 'GOVERNANCE',
     title: '조직·회원 및 안전관리',
-    description: '회장과 네 기능 책임자가 운영을 분담합니다. 현행 정회원 회비를 유지하고 공식 라이딩마다 안전 절차를 적용합니다.',
+    description: `${membershipStatus} 운영위원회가 업무를 분담하고 공식 라이딩마다 안전 절차를 적용합니다.`,
     highlights: [
-      { value: '5인', label: '운영위원회', detail: '회장 1명과 기능 책임자 4명' },
-      { value: '1인', label: '독립 감사', detail: '회계와 운영 점검' },
+      { value: '8명', label: '운영위원회', detail: '회장·총무 포함' },
+      { value: '1명', label: '총무', detail: '회계와 회원·회비 관리' },
       { value: '100,000원', label: '정회원 연회비', detail: '12개월 기준 현행 유지' },
       { value: '1월 1~20일', label: '연회비 납부', detail: '매년 지정 계좌 입금' },
     ],
@@ -120,10 +123,10 @@ export const chapters = [
         layout: 'organization-chart',
         assembly: { title: '회원총회', text: '계획·예산·회칙 의결' },
         chair: { title: '회장 1인', text: '운영위원회 총괄' },
-        auditor: { title: '감사 1인', text: '회계·운영 독립 점검' },
-        committee: '운영위원회 5인',
+        auditor: { title: '감사', text: '' },
+        committee: '운영위원회 8명',
         leads: [
-          { title: '운영·재정', text: '총무·회계와 회원·회비 관리' },
+          { title: '총무 1명', text: '운영·재정, 회계와 회원·회비 관리' },
           { title: '라이딩·안전', text: '코스·현장 리더 관리와 안전·응급 대응' },
           { title: '시민참여', text: '챌린지·QR 운영과 지역 협력' },
           { title: '데이터·정책', text: '앱·감축 검증과 정책·홍보' },
@@ -136,7 +139,7 @@ export const chapters = [
         items: [
           { title: '총회', text: '연 1회 개최합니다. 정회원 과반 출석과 출석자 과반 찬성을 권고하며 회칙 개정 기준은 3분의 2입니다.' },
           { title: '운영위원회와 현장', text: '운영위원회는 월 1회 열어 과반 출석·찬성으로 집행과 일정을 조정합니다. 현장 책임자는 사업을 실행하고 안전을 관리합니다.' },
-          { title: '감사와 모단체 협의', text: '감사는 운영과 회계를 점검하고 분기별 공개·개선에 참여합니다. 전북환경운동연합 회원모임 유지를 전제로 대외계약·보험·개인정보 처리 주체를 협의하고, 독립 단체화는 별도로 검토합니다.' },
+          { title: '감사와 모단체 협의', text: '감사를 선임하면 운영과 회계를 점검하고 분기별 공개·개선에 참여하도록 합니다. 전북환경운동연합 회원모임 유지를 전제로 대외계약·보험·개인정보 처리 주체를 협의하고, 독립 단체화는 별도로 검토합니다.' },
         ],
       },
       {
@@ -342,7 +345,7 @@ export const chapters = [
           ['챌린지 참가비', '참가 100명 × 1만원', '100'],
           ['후원', '확보 여부에 따라 반영', '220'],
         ],
-        note: '활동회원 80명 중 60명이 연회비를 납부하는 가정입니다. 실제 납부 인원에 따라 수입계획을 조정합니다.',
+        note: `2027년 수입계획은 목표 활동회원 80명 중 60명이 연회비를 납부하는 시나리오입니다. 현재 ${participationEstimate} 실제 납부 인원에 맞춰 수입계획을 조정합니다.`,
       },
       {
         title: '지출 배분안',

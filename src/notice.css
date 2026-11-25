@@ -27,8 +27,10 @@ html:has(.inauguration-notice:modal) {
   overflow: hidden;
   border: 1px solid var(--glass-edge);
   border-radius: .95rem;
-  background: linear-gradient(145deg, #fbfdfff7, #eef8fff5 56%, #e2f3fdf5);
-  box-shadow: 0 1px 0 #fff inset, 0 1.25rem 4rem #102b4040, 0 0 0 1px #bfdcea75;
+  background:
+    radial-gradient(ellipse 19rem 13rem at 100% 100%, #cbe9f9e0, transparent 94%),
+    linear-gradient(145deg, #fcfefffa, #f1fafff7 54%, #e4f3fdf5);
+  box-shadow: 0 1px 0 #fff inset, 0 1.5rem 4.5rem #102b4057, 0 0 0 1px #d4efff85;
   color: var(--body);
 }
 
@@ -38,8 +40,11 @@ html:has(.inauguration-notice:modal) {
 }
 
 .inauguration-notice::backdrop {
-  background: #173c565e;
-  backdrop-filter: blur(5px);
+  background:
+    radial-gradient(ellipse at 94% 5%, #a1d1ef5e, transparent 46%),
+    radial-gradient(ellipse at 7% 100%, #60b2ca40, transparent 49%),
+    linear-gradient(145deg, #23465f9c, #15384fb8 68%, #28567099);
+  backdrop-filter: blur(7px);
 }
 
 .inauguration-notice__header {
@@ -49,7 +54,12 @@ html:has(.inauguration-notice:modal) {
   column-gap: .75rem;
   padding: clamp(1.1rem, 4vw, 1.85rem) var(--notice-inset) .95rem;
   border-block-end: 1px solid var(--paper-line);
-  background: radial-gradient(ellipse at 100% 0%, #c3e5f9a8, transparent 76%);
+  background:
+    linear-gradient(90deg, #8bbfdc, #e5f7ff 33%, #e5c88c 67%, #8cbbdb) top / 100% .2rem no-repeat,
+    linear-gradient(102deg, #f7fcfff7 6%, #f5fbffbf 44%, transparent 87%),
+    repeating-radial-gradient(ellipse at 100% 0%, #2774a432 0 1px, transparent 1px .78rem),
+    radial-gradient(ellipse at 87% -15%, #fff4d8 0%, transparent 51%),
+    linear-gradient(133deg, #f2faff, #c3e6f8 72%, #9acbe8);
 }
 
 .inauguration-notice__eyebrow {
@@ -116,7 +126,7 @@ html:has(.inauguration-notice:modal) {
 .inauguration-notice__footer {
   padding: .72rem var(--notice-inset);
   border-block-start: 1px solid var(--paper-line);
-  background: #f7fcfff0;
+  background: linear-gradient(103deg, #f7fcfff5, #e7f5fff0);
 }
 
 .inauguration-notice__footer form {
